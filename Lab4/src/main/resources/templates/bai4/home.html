@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html th:replace="~{/bai4/layout::view(~{::title}, ~{::article})}">
+<meta charset="UTF-8">
+<head>
+    <title>Trang chủ</title>
+</head>
+<body>
+<article>
+    <h1 th:text="#{menu.home}">Trang chủ</h1>
+    <img th:src="@{/photos/photo.png}" alt="ảnh demo">
+</article>
+</body>
+</html>
