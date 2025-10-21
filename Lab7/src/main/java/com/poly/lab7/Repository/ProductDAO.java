@@ -16,7 +16,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 //    Page<Product> findByPrice(double minPrice, double maxPrice, Pageable pageable);
 
     // task 4
-    Page<Product> findByPriceBetween(double minPrice, double maxPrice);
+    Page<Product> findByPriceBetween(double minPrice, double maxPrice, Pageable pageable);
 
     // task 2
 //    @Query("FROM Product o WHERE o.name LIKE ?1")

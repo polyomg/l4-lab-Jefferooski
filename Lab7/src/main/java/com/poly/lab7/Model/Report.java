@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public interface Report {
 
-    Serializable getGroup(); // Group by category (can be a String, Category object, etc.)
+    Serializable getGroup(); // Group by category
 
     Double getSum();        // Total price for the category
 

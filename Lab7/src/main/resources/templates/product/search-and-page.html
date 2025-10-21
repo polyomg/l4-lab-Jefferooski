@@ -47,17 +47,17 @@
 
 <!-- Pagination Navigation -->
 <div style="margin-top: 20px;">
-    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&p=0|}">First</a>
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=0|}">First</a>
     |
-    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&p=${page.number - 1 < 0 ? page.totalPages - 1 : page.number - 1}|}">
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=${page.number - 1 < 0 ? page.totalPages - 1 : page.number - 1}|}">
         Previous
     </a>
     |
-    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&p=${page.number + 1 >= page.totalPages ? 0 : page.number + 1}|}">
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=${page.number + 1 >= page.totalPages ? 0 : page.number + 1}|}">
         Next
     </a>
     |
-    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&p=${page.totalPages - 1}|}">Last</a>
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=${page.totalPages - 1}|}">Last</a>
 </div>
 
 <!-- Pagination Info -->

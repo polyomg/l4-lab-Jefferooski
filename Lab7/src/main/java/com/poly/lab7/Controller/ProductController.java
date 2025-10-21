@@ -81,7 +81,7 @@ public class ProductController {
 
         // Get the total pages based on the initial query
         Pageable tempPageable = PageRequest.of(0, pageSize);
-        Page<Product> tempPage = dao.findByPriceBetween(minPrice, maxPrice);
+        Page<Product> tempPage = dao.findByPriceBetween(minPrice, maxPrice, tempPageable);
         int totalPages = tempPage.getTotalPages();
 
         // Wrap-around logic for pagination
@@ -95,7 +95,7 @@ public class ProductController {
 
         // Final query with adjusted page number
         Pageable finalPageable = PageRequest.of(requestedPage, pageSize);
-        Page<Product> productPage = dao.findByPriceBetween(minPrice, maxPrice);
+        Page<Product> productPage = dao.findByPriceBetween(minPrice, maxPrice, finalPageable);
 
         model.addAttribute("items", productPage.getContent());
         model.addAttribute("totalPages", productPage.getTotalPages());
@@ -128,7 +128,7 @@ public class ProductController {
     // task 5
     @RequestMapping("/search-and-page")
     public String searchAndPage(Model model,
-                                @RequestParam("keywords") String keywords,
+                                @RequestParam(value = "keywords", defaultValue = "") String keywords,
                                 @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size) {
 

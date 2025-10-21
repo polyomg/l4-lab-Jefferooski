@@ -1,6 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Search</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h2>Search Products by Price Range</h2>
+
 <form action="/product/search" method="get">
-    <input name="min" th:value="${min}" placeholder="Min Price">
-    <input name="max" th:value="${max}" placeholder="Max Price">
+    <input name="min" th:value="${min != null ? min : ''}" placeholder="Min Price">
+    <input name="max" th:value="${max != null ? max : ''}" placeholder="Max Price">
     <button>Search</button>
 </form>
 
@@ -14,25 +24,23 @@
     </tr>
     </thead>
     <tbody>
-    <th:block th:each="item : ${items}">
-        <tr>
-            <td th:text="${item.id}"></td>
-            <td th:text="${item.name}"></td>
-            <td th:text="${item.price}"></td>
-            <td th:text="${item.createDate}"></td>
-        </tr>
-    </th:block>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.createDate}"></td>
+    </tr>
     </tbody>
 </table>
 
 <!-- Pagination Links -->
-<div>
-    <a th:href="@{/product/search?min=${min}&max=${max}&page=0&size=${size}">First</a>
-    <a th:href="@{/product/search?min=${min}&max=${max}&page=${currentPage - 1 >= 0 ? currentPage - 1 : 0}&size=${size}"
+<div th:if="${totalPages > 1}">
+    <a th:href="@{/product/search?min=${min != null ? min : ''}&max=${max != null ? max : ''}&page=0&size=${size}}">First</a>
+    <a th:href="@{/product/search?min=${min != null ? min : ''}&max=${max != null ? max : ''}&page=${currentPage - 1 >= 0 ? currentPage - 1 : 0}&size=${size}}"
        th:if="${currentPage > 0}">Previous</a>
-    <a th:href="@{/product/search?min=${min}&max=${max}&page=${currentPage + 1 < totalPages ? currentPage + 1 : currentPage}&size=${size}"
+    <a th:href="@{/product/search?min=${min != null ? min : ''}&max=${max != null ? max : ''}&page=${currentPage + 1 < totalPages ? currentPage + 1 : currentPage}&size=${size}}"
        th:if="${currentPage < totalPages - 1}">Next</a>
-    <a th:href="@{/product/search?min=${min}&max=${max}&page=${totalPages - 1}&size=${size}">Last</a>
+    <a th:href="@{/product/search?min=${min != null ? min : ''}&max=${max != null ? max : ''}&page=${totalPages - 1}&size=${size}}">Last</a>
 </div>
 
 <!-- Page Information -->
@@ -41,3 +49,6 @@
     <li>Total Pages: <span th:text="${totalPages}"></span></li>
     <li>Items per page: <span th:text="${size}"></span></li>
 </ul>
+
+</body>
+</html>

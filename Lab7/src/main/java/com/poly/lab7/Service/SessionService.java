@@ -10,6 +10,7 @@ public class SessionService {
     @Autowired
     HttpSession session;
 
+    @SuppressWarnings("unchecked")
     public <T> T get(String name, T defaultValue) {
         T value = (T) session.getAttribute(name);
         return (value != null) ? value : defaultValue;
