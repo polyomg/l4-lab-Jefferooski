@@ -13,6 +13,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findById(String username) {
-        return accountDAO.findById(username).orElse(null);
+        System.out.println("AccountServiceImpl: Looking for username: " + username);
+        try {
+            Account result = accountDAO.findById(username).orElse(null);
+            System.out.println("AccountServiceImpl: Found user: " + (result != null ? result.getUsername() : "null"));
+            return result;
+        } catch (Exception e) {
+            System.out.println("AccountServiceImpl: Error finding user: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 }

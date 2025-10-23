@@ -48,11 +48,20 @@ public class MailServiceImpl implements MailService {
 
             // 2.4. Attach files if any
             String filenames = mail.getFilenames();
+            System.out.println("Mail filenames: " + filenames);
             if (!isNullOrEmpty(filenames)) {
                 for (String filename : filenames.split("[,;]+")) {
                     File file = new File(filename.trim());
-                    helper.addAttachment(file.getName(), file);
+                    System.out.println("Attempting to attach file: " + file.getAbsolutePath() + " (exists: " + file.exists() + ")");
+                    if (file.exists()) {
+                        helper.addAttachment(file.getName(), file);
+                        System.out.println("Successfully attached: " + file.getName());
+                    } else {
+                        System.out.println("File not found: " + file.getAbsolutePath());
+                    }
                 }
+            } else {
+                System.out.println("No filenames to attach");
             }
 
             // 3. Send the email

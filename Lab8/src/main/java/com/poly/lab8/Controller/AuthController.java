@@ -22,6 +22,13 @@ public class AuthController {
     // Show login form
     @GetMapping("/auth/login")
     public String loginForm(Model model) {
+        // Debug: Check if database has any users
+        try {
+            // This is just for debugging - remove in production
+            System.out.println("Login form loaded - checking database connection...");
+        } catch (Exception e) {
+            System.out.println("Database connection error: " + e.getMessage());
+        }
         return "auth/login"; // corresponds to login.html
     }
 
@@ -81,10 +88,13 @@ public class AuthController {
                                @RequestParam("password") String password) {
 
         // Find user from the database
+        System.out.println("Attempting to find user: " + username);
         Account user = accountService.findById(username);
+        System.out.println("User found: " + (user != null ? user.getUsername() : "null"));
 
         // Check if user exists and validate password
         if (user == null) {
+            System.out.println("User not found in database for username: " + username);
             model.addAttribute("message", "Invalid username!");
         } else if (!user.getPassword().equals(password)) {
             model.addAttribute("message", "Invalid password!");
@@ -103,6 +113,18 @@ public class AuthController {
 
         // If login fails, return to login page
         return "auth/login";
+    }
+
+    // Admin home page
+    @GetMapping("/admin/admin_home")
+    public String adminHome(Model model) {
+        return "admin/admin_home";
+    }
+
+    // User home page  
+    @GetMapping("/user/user_home")
+    public String userHome(Model model) {
+        return "user/user_home";
     }
 
     // Logout method to clear session and redirect to login

@@ -69,18 +69,25 @@ public class MailController {
 
         // Handle file attachments
         if (attachments != null && attachments.length > 0) {
+            System.out.println("Number of attachments: " + attachments.length);
             StringBuilder filenames = new StringBuilder();
             for (MultipartFile file : attachments) {
+                System.out.println("Processing file: " + file.getOriginalFilename() + " (size: " + file.getSize() + ")");
                 try {
                     // Save the uploaded files temporarily
                     File tempFile = new File("uploads/" + file.getOriginalFilename());
                     file.transferTo(tempFile);
+                    System.out.println("File saved to: " + tempFile.getAbsolutePath());
                     filenames.append(tempFile.getAbsolutePath()).append(",");
                 } catch (IOException e) {
+                    System.out.println("Error saving file: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
             mail = mail.toBuilder().filenames(filenames.toString()).build();
+            System.out.println("Final filenames string: " + filenames.toString());
+        } else {
+            System.out.println("No attachments found or attachments array is null/empty");
         }
 
         // Send the email directly or enqueue it based on the option
