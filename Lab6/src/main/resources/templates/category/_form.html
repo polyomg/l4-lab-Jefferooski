@@ -1,0 +1,17 @@
+<!-- templates/category/_form.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="form">
+        <form action="#" th:object="${item}" method="post">
+            <input th:field="*{id}" placeholder="Category Id?" />
+            <input th:field="*{name}" placeholder="Category Name?" />
+            <hr>
+            <button type="submit" formaction="/category/create">Create</button>
+            <button type="submit" formaction="/category/update">Update</button>
+            <a th:href="@{|/category/delete/${item.id}|}">Delete</a>
+            <a th:href="@{/category/index}">Reset</a>
+        </form>
+    </div>
+</body>
+</html>

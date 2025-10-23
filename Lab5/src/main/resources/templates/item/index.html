@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item List</title>
+</head>
+<body>
+<!-- Put this at the top of item/index.html and cart/index.html -->
+<div th:if="${session.username == null}">
+    <script th:inline="javascript">
+        var loginUrl = /*[[@{/account/login}]]*/ '';
+        window.location.href = loginUrl;
+    </script>
+</div>
+
+<h4><a href="/account/logout">Logout</a></h4>
+
+<ul>
+    <li th:each="item : ${items}">
+        <span th:text="${item.name}"></span>
+        (<span th:text="'$' + ${item.price}"></span>)
+        ::
+        [<a th:href="@{|/cart/add/${item.id}|}">Add To Cart</a>]
+    </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Search with Pagination</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h2>Search Products by Name</h2>
+
+<!-- Search Form -->
+<form action="/product/search-and-page" method="get">
+    <input type="text" name="keywords" th:value="${keywords}" placeholder="Enter product name..."/>
+
+    <!-- Page size dropdown -->
+    <select name="size">
+        <option th:value="5" th:selected="${size == 5}">5</option>
+        <option th:value="10" th:selected="${size == 10}">10</option>
+        <option th:value="20" th:selected="${size == 20}">20</option>
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<hr/>
+
+<!-- Search Results Table -->
+<h3>Results</h3>
+<table border="1" width="100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Create Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${page.content}">
+        <td th:text="${item.id}">1</td>
+        <td th:text="${item.name}">Sample</td>
+        <td th:text="${item.price}">99.99</td>
+        <td th:text="${item.createDate}">2023-01-01</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Pagination Navigation -->
+<div style="margin-top: 20px;">
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=0|}">First</a>
+    |
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=${page.number - 1 < 0 ? page.totalPages - 1 : page.number - 1}|}">
+        Previous
+    </a>
+    |
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=${page.number + 1 >= page.totalPages ? 0 : page.number + 1}|}">
+        Next
+    </a>
+    |
+    <a th:href="@{|/product/search-and-page?keywords=${keywords}&size=${size}&page=${page.totalPages - 1}|}">Last</a>
+</div>
+
+<!-- Pagination Info -->
+<ul>
+    <li>Entities on this page: <span th:text="${page.numberOfElements}"></span></li>
+    <li>Current page (0-based): <span th:text="${page.number}"></span></li>
+    <li>Page size: <span th:text="${page.size}"></span></li>
+    <li>Total entities: <span th:text="${page.totalElements}"></span></li>
+    <li>Total pages: <span th:text="${page.totalPages}"></span></li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+
+<!-- In layout or homepage -->
+<p th:if="${session.user != null}">
+    Hello, <span th:text="${session.user.fullname}">User</span>!
+    <a href="/auth/logout" style="margin-left: 10px; color: red;">Logout</a>
+</p>
+
+<h2>Login</h2>
+
+<i th:text="${message}">Error message</i>
+
+<form action="/auth/login" method="post">
+    <label>Username:</label>
+    <input name="username">
+    <br>
+    <label>Password:</label>
+    <input name="password" type="password">
+    <hr>
+    <button>Login</button>
+</form>
+
+</body>
+</html>
